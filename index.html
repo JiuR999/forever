@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>好友展示页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-gradient {
+                background: linear-gradient(135deg, #3B82F6 0%, #EC4899 100%);
+            }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                background-image: linear-gradient(135deg, #3B82F6 0%, #EC4899 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 海报区域 -->
+    <header class="relative h-[70vh] w-full overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 z-10"></div>
+        <img src="https://img.picui.cn/free/2025/07/01/6863e39bf4005.jpg" alt="团队海报" class="absolute w-full h-full object-cover">
+        <div class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-white text-center">
+            <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold mb-6 tracking-tight">我们的团队</h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mb-8 opacity-90">认识我们团队中的每一位成员，了解他们的故事、技能和成长历程</p>
+            <a href="#team" class="animate-bounce mt-8">
+                <i class="fa fa-angle-down text-3xl"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- 好友卡片区域 -->
+    <section id="team" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-16 text-gradient">团队成员</h2>
+            <div id="team-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 卡片将通过JavaScript动态生成 -->
+                <div class="col-span-full text-center py-12">
+                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-4"></i>
+                    <p>加载团队成员中...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 团队展示页面 | 设计与开发</p>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后获取并渲染数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // 从JSON文件获取数据
+                const response = await fetch('data.json');
+                const data = await response.json();
+                const teamCardsContainer = document.getElementById('team-cards');
+
+                // 清空加载状态
+                teamCardsContainer.innerHTML = '';
+
+                // 渲染每个团队成员卡片
+                data.people.forEach(person => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 transition-transform duration-300 border border-gray-100';
+                    card.innerHTML = `
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="./assets/images/${person.short}-bj.jpg" alt="${person.name}的背景" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-white text-xl font-bold">${person.name}</h3>
+                                <p class="text-white/90">${person.role}</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-center -mt-16 mb-4">
+                                <img src="./assets/images/${person.short}-detail-h.jpg" alt="${person.name}的头像" class="w-32 h-32 rounded-full border-4 border-white shadow-md">
+                            </div>
+                            <p class="text-gray-600 mb-6 text-center">${person.bio}</p>
+                            <a href="detail.html?id=${person.id}" class="block w-full py-3 px-4 bg-gradient-to-r from-primary to-secondary text-white text-center rounded-lg font-medium hover:opacity-90 transition-opacity">查看详情</a>
+                        </div>
+                    `;
+                    teamCardsContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                document.getElementById('team-cards').innerHTML = `
+                    <div class="col-span-full text-center py-12 text-red-500">
+                        <i class="fa fa-exclamation-circle text-3xl mb-4"></i>
+                        <p>数据加载失败，请稍后重试</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人详情 - 好友展示页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF4D6D",
+              secondary: "#EC4899",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      :root {
+        --md-sys-color-primary: #e53e3e;
+        --md-sys-color-secondary: #fbb6ce;
+        --md-sys-color-tertiary: #ed64a6;
+      }
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .card-gradient-qq {
+          background-color: var(--md-sys-color-primary);
+          border-radius: 12px 0 0 12px;
+        }
+        .card-gradient-phone {
+          background-color: var(--md-sys-color-secondary);
+          border-radius: 0;
+        }
+        .card-gradient-douyin {
+          background-color: var(--md-sys-color-tertiary);
+          border-radius: 0 12px 12px 0;
+        }
+        .md-card {
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .timeline-line {
+          @apply absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-pink-500 to-secondary;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md fixed w-full z-30">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <a
+          href="index.html"
+          class="text-xl font-bold text-gradient flex items-center"
+        >
+          <i class="fa fa-users mr-2"></i>团队展示
+        </a>
+        <a
+          href="index.html"
+          class="bg-gray-100 hover:bg-gray-200 transition-colors px-4 py-2 rounded-lg flex items-center"
+        >
+          <i class="fa fa-arrow-left mr-2"></i>返回列表
+        </a>
+      </div>
+    </nav>
+
+    <!-- 个人背景图区域 -->
+    <header class="pt-16 relative h-[60vh] w-full overflow-hidden">
+      <div class="absolute inset-0 bg-black/40 z-10"></div>
+      <img
+        id="person-background"
+        src="https://picsum.photos/id/1059/1920/1080"
+        alt="个人背景"
+        class="absolute w-full h-full object-cover"
+      />
+      <div
+        class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-end pb-12"
+      >
+        <div class="flex flex-col md:flex-row items-center">
+          <img
+            id="person-avatar"
+            src="https://picsum.photos/id/1005/200/200"
+            alt="个人头像"
+            class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg mb-6 md:mb-0 md:mr-8"
+          />
+          <div class="text-white text-center md:text-left">
+            <h1
+              id="person-name"
+              class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-2"
+            >
+              张三
+            </h1>
+            <p
+              id="person-role"
+              class="text-[clamp(1rem,2vw,1.25rem)] opacity-90"
+            >
+              前端开发工程师
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 个人简介 -->
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto">
+          <p
+            id="person-bio"
+            class="text-gray-600 text-lg leading-relaxed text-center"
+          >
+            热爱编程的前端开发者，喜欢探索新技术和创造优秀的用户体验。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系方式区域 -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold text-center mb-12">联系方式</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <!-- QQ联系方式 -->
+          <div
+            id="contact-qq"
+            class="card-gradient-qq p-6 text-white md-card transform hover:-translate-y-2 transition-all duration-300"
+          >
+            <div class="text-center">
+              <img
+                id="person-avatar-qq"
+                src="./assets/images/phone-icon.svg"
+                alt="QQ图标"
+                class="text-4xl mb-4 mx-auto"
+              />
+              <!-- <i class="fa fa-qq text-4xl mb-4"></i> -->
+              <h3 class="text-xl font-semibold mb-2">QQ</h3>
+              <p class="text-white/90" id="qq-number">123456789</p>
+            </div>
+          </div>
+
+          <!-- 手机号联系方式 -->
+          <div
+            id="contact-phone"
+            class="card-gradient-phone p-6 text-white md-card transform hover:-translate-y-2 transition-all duration-300"
+          >
+            <div class="text-center">
+              <img
+                id="person-avatar-ph"
+                src="./assets/images/phone-icon.svg"
+                alt="电话图标"
+                class="text-4xl mb-4 mx-auto"
+              />
+              <h3 class="text-xl font-semibold mb-2">电话</h3>
+              <p class="text-white/90" id="phone-number">13800138000</p>
+            </div>
+          </div>
+
+          <!-- 抖音联系方式 -->
+          <div
+            id="contact-douyin"
+            class="card-gradient-douyin p-6 text-white md-card transform hover:-translate-y-2 transition-all duration-300"
+          >
+            <div class="text-center">
+              <!-- <i class="fa fa-music text-4xl mb-4"></i> -->
+              <img
+                id="person-avatar-dy"
+                src="./assets/images/phone-icon.svg"
+                alt="抖音图标"
+                class="text-4xl mb-4 mx-auto"
+              />
+              <h3 class="text-xl font-semibold mb-2">抖音</h3>
+              <p class="text-white/90" id="douyin-number">zhangsan123</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 成长记录时间线 -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold text-center mb-16">成长记录</h2>
+        <div class="max-w-3xl mx-auto relative">
+          <!-- 时间线中轴线 -->
+          <div class="timeline-line"></div>
+
+          <!-- 时间线内容将通过JavaScript动态生成 -->
+          <div id="timeline-container" class="space-y-12">
+            <div class="flex justify-center py-12">
+              <i class="fa fa-spinner fa-spin text-3xl text-primary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2023 团队展示页面 | 设计与开发</p>
+      </div>
+    </footer>
+
+    <script>
+      // 从URL获取人员ID参数
+      function getPersonIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("id");
+      }
+
+      // 页面加载完成后获取并渲染数据
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const personId = getPersonIdFromUrl();
+          if (!personId) {
+            throw new Error("未找到人员ID");
+          }
+
+          // 从JSON文件获取数据
+          const response = await fetch("data.json");
+          const data = await response.json();
+          const person = data.people.find((p) => p.id === parseInt(personId));
+
+          if (!person) {
+            throw new Error("未找到该人员信息");
+          }
+
+          // 渲染个人信息
+          document.getElementById("person-name").textContent = person.name;
+          document.getElementById("person-role").textContent = person.role;
+          document.getElementById("person-bio").textContent = person.bio;
+          document.getElementById("qq-number").textContent = person.contacts.qq;
+          document.getElementById("phone-number").textContent =
+            person.contacts.phone;
+          document.getElementById("douyin-number").textContent =
+            person.contacts.douyin;
+
+          // 设置图片（使用picsum.photos作为示例图片）
+          const backgroundImg = document.getElementById("person-background");
+          backgroundImg.src = `./assets/images/${person.short}-detail-bj.jpg`;
+
+          backgroundImg.alt = `${person.name}的背景`;
+
+          const avatarImg = document.getElementById("person-avatar");
+          avatarImg.src = `./assets/images/${person.short}-detail-h.jpg`;
+
+          const avatarImgq = document.getElementById("person-avatar-qq");
+          avatarImgq.src = `./assets/images/${person.short}.jpg`;
+
+          const avatarImgd = document.getElementById("person-avatar-dy");
+          avatarImgd.src = `./assets/images/${person.short}-dy.jpg`;
+
+          avatarImg.alt = `${person.name}的头像`;
+
+          // 渲染时间线
+          const timelineContainer =
+            document.getElementById("timeline-container");
+          timelineContainer.innerHTML = "";
+
+          person.timeline.forEach((item, index) => {
+            const isEven = index % 2 === 0;
+            const timelineItem = document.createElement("div");
+            timelineItem.className = `relative flex ${
+              isEven ? "flex-row" : "flex-row-reverse"
+            }`;
+            timelineItem.innerHTML = `
+                        <div class="flex-1 ${
+                          isEven ? "pr-12 text-right" : "pl-12"
+                        }">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                                <h3 class="text-xl font-bold text-primary mb-2">${
+                                  item.year
+                                }</h3>
+                                ${
+                                  item.imageUrl
+                                    ? `<div class="my-4"><img src="${item.imageUrl}" alt="${item.year}事件图片" class="rounded-lg shadow-sm max-w-full h-auto object-cover transform hover:scale-[1.02] transition-transform duration-300"></div>`
+                                    : ""
+                                }
+                                <p class="text-gray-600">${item.event}</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-5 top-6 w-4 h-4 rounded-full bg-white border-4 border-primary z-10"></div>
+                    `;
+            timelineContainer.appendChild(timelineItem);
+          });
+        } catch (error) {
+          console.error("加载数据失败:", error);
+          // 显示错误信息
+          document.querySelector("header").innerHTML = `
+                    <div class="container mx-auto px-4 py-20 text-center">
+                        <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+                        <h1 class="text-2xl font-bold text-red-500 mb-2">无法加载个人信息</h1>
+                        <p class="text-gray-600 mb-6">${error.message}</p>
+                        <a href="index.html" class="inline-block py-3 px-6 bg-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity">返回团队列表</a>
+                    </div>
+                `;
+          // 隐藏其他部分
+          document
+            .querySelectorAll("section, footer")
+            .forEach((el) => (el.style.display = "none"));
+        }
+      });
+    </script>
+  </body>
+</html>
